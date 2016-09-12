@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.ac.cu.Board">
+	
+	<resultMap type="Board" id="BoardResultMap">
+		<result column="snum" property="snum"/>
+		<result column="boardnum" property="boardnum"/>
+		<result column="score" property="score"/>
+		<result column="btitle" property="btitle"/>
+		<result column="bcontent" property="bcontent"/>
+		<result column="password" property="password"/>
+		<result column="pid" property="pid"/>
+		<result column="reg_date" property="reg_date"/>	
+	</resultMap>
+	
+	<select id="addBoard" parameterType="Board">
+	<![CDATA[
+	insert into board(snum, boardnum, score, btitle, bcontent, password, pid, reg_date)
+	values(#{snum}, seq_boardnum.NEXTVAL, #{score}, #{btitle}, #{bcontent}, #{password}, #{pid}, sysdate)
+	]]>
+	</select>
+	
+	<update id="updateBoard" parameterType="Board">
+	<![CDATA[
+	update board set
+	snum=#{snum}, score=#{score}, btitle=#{btitle}, bcontent=#{bcontent}, password=#{password}, pid=#{pid}, reg_date=sysdate
+	where boardnum=#{boardnum}
+	]]>
+	</update>
+	
+	<delete id="deleteBoard">
+	<![CDATA[
+	delete from board where boardnum=#{boardnum}
+	]]>
+	</delete>
+	
+	<select id="selectBoard" resultMap="BoardResultMap">
+	<![CDATA[
+	select * from board where boardnum=#{boardnum}
+	]]>
+	</select>
+	
+	<select id="boardlist" resultMap="BoardResultMap">
+	select * from board where snum=#{snum}
+	</select>
+	
+</mapper>

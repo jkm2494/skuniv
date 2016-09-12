@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="kr.ac.cu.goods">
+    	<resultMap type="goods" id="goodsResultMap">
+			<result column="gnum" property="gnum"/>
+			<result column="gname" property="gname"/>
+			<result column="gcnum" property="gcnum"/>
+			<result column="snum" property="snum"/>
+			<result column="ginum" property="ginum"/>
+		</resultMap>
+	
+	<select id="selectgoods"  resultMap="goodsResultMap">
+    <![CDATA[
+    select *
+    from goods
+    ]]>
+    </select>
+	
+	
+    <insert id="insertgoods" parameterType="goods">
+       <![CDATA[
+    insert into goods (gnum,gname,gcnum,snum,ginum) 
+    values(#{gnum},#{gname},#{gcnum},#{snum},seq_ginum.NEXTVAL)
+    ]]>
+    </insert>
+    
+    <update id="updategoods" parameterType="goods">
+    <![CDATA[
+    update goods
+    set gname=#{gname}
+		,gimage = #{gimage}
+		,gcnum =#{gcnum}
+		,snum =#{snum}
+		,ginum =#{ginum}
+    where gnum=#{gnum}
+    ]]>
+    </update>
+    
+    <delete id="deletegoods" parameterType="goods">
+    <![CDATA[
+    delete 
+ 	from goods
+    where gnum=#{gnum}
+    ]]>
+    </delete>
+    
+   
+    </mapper>

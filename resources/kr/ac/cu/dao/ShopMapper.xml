@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.ac.cu.Shop">
+
+
+	<resultMap type="Shop" id="ShopResultMap">
+		<result column="snum" property="snum"/>
+		<result column="sname" property="sname"/>
+		<result column="phone" property="phone"/>
+		<result column="simage" property="simage"/>
+		<result column="scategory" property="scategory"/>
+		<result column="laptitude" property="laptitude"/>
+		<result column="longitude" property="longitude"/>	
+		<result column="intro" property="intro"/>
+		<result column="startRow" property="startRow"/>
+		<result column="endRow" property="endRow"/>
+	</resultMap>
+	
+	<select id="addShop" parameterType="Shop">
+	<![CDATA[
+	insert into shop(snum, sname, phone, simage, scategory, intro)
+	values(seq_shopnum.nextval, #{sname}, #{phone}, #{simage}, #{scategory}, #{intro})
+	]]>
+	</select>
+	
+	<update id="updateShop" parameterType="Shop">
+	<![CDATA[
+	update shop set
+	sname=#{sname}, phone=#{phone}, simage=#{simage}, scategory=#{scategory}, intro=#{intro}
+	where snum=#{snum}
+	]]>
+	</update>
+	
+	<delete id="deleteShop">
+	<![CDATA[
+	delete from shop where snum=#{snum}
+	]]>
+	</delete>
+	
+	<select id="selectShop" resultMap="ShopResultMap">
+	<![CDATA[
+	select * from shop where snum=#{snum}
+	]]>
+	</select>
+	
+	<select id="shoplist" resultMap="ShopResultMap">
+	<![CDATA[
+	select * from shop
+	]]>
+	</select>
+	
+	<select id="nameSearch" resultMap="ShopResultMap">
+	<![CDATA[
+	select * from shop where sname=#{sname}
+	]]>
+	</select>
+	
+	<select id="categorySearch" resultMap="ShopResultMap">
+	<![CDATA[
+	select * from shop where scategory=#{scategory}
+	]]>
+	</select>
+	
+   <select id="countShop" resultType="int">
+	<![CDATA[
+	select count(*) from shop
+	]]>
+	</select>
+	
+	<select id="pagingShop" parameterType="Shop" resultMap="ShopResultMap">
+	<![CDATA[
+	select * from shop where snum>=#{startRow} and snum<=#{endRow}
+	]]>
+	</select>
+	
+</mapper>
